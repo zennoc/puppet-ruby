@@ -5,16 +5,8 @@
 #
 # == Parameters
 #
-# [*dependencies_class*]
-#   The name of the class that installs dependencies and prerequisite
-#   resources needed by this module.
-#   Default is $ruby::dependencies which uses Example42 modules.
-#   Set to '' to not install any dependency (you must provide what's
-#   defined in graylog2/manifests/dependencies.pp in some way).
-#   Set directy the name of a custom class to manage there the dependencies
-#
 # [*provider*]
-#   The Puppet provider to use to install bundle package
+#   The Puppet provider to use to install packages
 #   Default: gem
 #   Set to undef to leave Puppet decide
 #
@@ -57,15 +49,23 @@
 #
 #
 class ruby (
-  $dependencies_class  = params_lookup( 'dependencies_class' ),
+  $install_devel       = params_lookup( 'install_devel' ),
+  $install_rubygems    = params_lookup( 'install_rubygems' ),
+  $install_rails       = params_lookup( 'install_rails' ),
   $provider            = params_lookup( 'provider' ),
   $my_class            = params_lookup( 'my_class' ),
   $version             = params_lookup( 'version' ),
   $absent              = params_lookup( 'absent' ),
   $noops               = params_lookup( 'noops' ),
-  $package             = params_lookup( 'package' )
+  $package             = params_lookup( 'package' ),
+  $package_devel       = params_lookup( 'package_devel' ),
+  $package_rubygems    = params_lookup( 'package_rubygems' ),
+  $package_rails       = params_lookup( 'package_rails' )
   ) inherits ruby::params {
 
+  $bool_install_devel=any2bool($install_devel)
+  $bool_install_rubygems=any2bool($install_rubygems)
+  $bool_install_rails=any2bool($install_rails)
   $bool_absent=any2bool($absent)
   $bool_noops=any2bool($noops)
 
@@ -76,16 +76,24 @@ class ruby (
   }
 
   ### Managed resources
-  if $ruby::dependencies_class != '' {
-    include $ruby::dependencies_class
-  }
-
   if ! defined(Package[$ruby::package]) {
     package { $ruby::package:
       ensure   => $ruby::manage_package,
       provider => $ruby::provider,
       noop     => $ruby::bool_noops,
     }
+  }
+
+  if $ruby::bool_install_devel {
+    include ruby::devel
+  }
+
+  if $ruby::bool_install_rails {
+    include ruby::rails
+  }
+
+  if $ruby::bool_install_rubygems {
+    include ruby::rubygems
   }
 
   ### Include custom class if $my_class is set

@@ -15,10 +15,27 @@
 class ruby::params {
 
   ### Application related parameters
-  $dependencies_class = 'ruby::dependencies'
-  $provider = 'gem'
+  $provider = undef
   $package = $::operatingsystem ? {
     default => 'ruby',
+  }
+
+  $install_devel = false
+  $install_rubygems = false
+  $install_rails = false
+
+  $package_devel = $::operatingsystem ? {
+    /(?i:Ubuntu|Debian|Mint)/ => 'ruby-dev',
+    /(?i:SLES|OpenSuSE)/      => 'ruby-devel',
+    default => 'ruby-devel',
+  }
+
+  $package_rails = $::operatingsystem ? {
+    default => 'rails',
+  }
+
+  $package_rubygems = $::operatingsystem ? {
+    default => 'rubygems',
   }
 
   # General Settings
