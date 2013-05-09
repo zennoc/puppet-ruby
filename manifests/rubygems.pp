@@ -28,7 +28,7 @@ class ruby::rubygems (
   $absent              = false,
   $noops               = false,
   $package             = $ruby::package_rubygems
-  ) inherits ruby::params {
+  ) inherits ruby {
 
   $bool_absent=any2bool($absent)
   $bool_noops=any2bool($noops)

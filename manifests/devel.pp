@@ -27,8 +27,8 @@ class ruby::devel (
   $version             = 'present',
   $absent              = false,
   $noops               = false,
-  $package             = $ruby::package_dev
-  ) inherits ruby::params {
+  $package             = $ruby::package_devel
+  ) inherits ruby {
 
   $bool_absent=any2bool($absent)
   $bool_noops=any2bool($noops)
@@ -40,8 +40,8 @@ class ruby::devel (
   }
 
   ### Managed resources
-  if ! defined(Package[$ruby::package_dev]) {
-    package { $ruby::package_dev:
+  if ! defined(Package[$ruby::package_devel]) {
+    package { $ruby::package_devel:
       ensure   => $manage_package,
       noop     => $bool_noops,
     }
