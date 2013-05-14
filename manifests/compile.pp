@@ -13,8 +13,10 @@ class ruby::compile {
     packages => $packages_list ,
   }
 
+  $short_versions=split($ruby::version, '[.]')
+  $short_version="${short_versions[0]}.${short_versions[1]}"
   puppi::netinstall { 'ruby_source':
-    url                 => "ftp://ftp.ruby-lang.org/pub/ruby/ruby-${ruby::version}.zip",
+    url                 => "ftp://ftp.ruby-lang.org/pub/ruby/${short_version}/ruby-${ruby::version}.zip",
     destination_dir     => "/var/tmp",
     extracted_dir       => "ruby-${ruby::version}",
     postextract_command => "sh configure && make && make test && make install",
