@@ -23,7 +23,7 @@ class ruby::params {
   $install_devel = false
   $install_rubygems = false
   $install_rails = false
-
+  $compile_from_source = false
   $package_devel = $::operatingsystem ? {
     /(?i:Ubuntu|Debian|Mint)/ => 'ruby-dev',
     /(?i:SLES|OpenSuSE)/      => 'ruby-devel',

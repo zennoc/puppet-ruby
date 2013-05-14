@@ -52,6 +52,7 @@ class ruby (
   $install_devel       = params_lookup( 'install_devel' ),
   $install_rubygems    = params_lookup( 'install_rubygems' ),
   $install_rails       = params_lookup( 'install_rails' ),
+  $compile_from_source = params_lookup( 'compile_from_source' ),
   $provider            = params_lookup( 'provider' ),
   $my_class            = params_lookup( 'my_class' ),
   $version             = params_lookup( 'version' ),
@@ -66,6 +67,7 @@ class ruby (
   $bool_install_devel=any2bool($install_devel)
   $bool_install_rubygems=any2bool($install_rubygems)
   $bool_install_rails=any2bool($install_rails)
+  $bool_compile_from_source=any2bool($compile_from_source)
   $bool_absent=any2bool($absent)
   $bool_noops=any2bool($noops)
 
@@ -76,7 +78,7 @@ class ruby (
   }
 
   ### Managed resources
-  if ! defined(Package[$ruby::package]) {
+  if ! defined(Package[$ruby::package]) and $bool_compile_from_source != true {
     package { $ruby::package:
       ensure   => $ruby::manage_package,
       provider => $ruby::provider,
@@ -94,6 +96,10 @@ class ruby (
 
   if $ruby::bool_install_rubygems {
     include ruby::rubygems
+  }
+
+  if $ruby::bool_compile_from_source {
+    include ruby::compile
   }
 
   ### Include custom class if $my_class is set
