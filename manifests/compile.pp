@@ -5,7 +5,7 @@
 class ruby::compile {
 
   $packages_list = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => 'build-essential vim git-core curl bison openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev libcurl4-openssl-dev libopenssl-ruby apache2-prefork-dev libapr1-dev libaprutil1-dev libx11-dev libffi-dev tcl-dev tk-dev',
+    /(?i:Debian|Ubuntu|Mint)/ => 'build-essential unzip vim git-core curl bison openssl libreadline6 libreadline6-dev zlib1g zlib1g-dev libssl-dev libyaml-dev libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev libcurl4-openssl-dev libopenssl-ruby apache2-prefork-dev libapr1-dev libaprutil1-dev libx11-dev libffi-dev tcl-dev tk-dev',
     default                   => '',
   }
 
