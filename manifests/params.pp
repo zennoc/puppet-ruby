@@ -27,7 +27,12 @@ class ruby::params {
   $package_devel = $::operatingsystem ? {
     /(?i:Ubuntu|Debian|Mint)/ => 'ruby-dev',
     /(?i:SLES|OpenSuSE)/      => 'ruby-devel',
-    default => 'ruby-devel',
+    default                   => 'ruby-devel',
+  }
+  $package_rake = $::operatingsystem ? {
+    /(?i:RedHat|Centos|Scientific)/ => 'rubygem-rake',
+    /(?i:SLES|OpenSuSE)/            => 'rubygem-rake',
+    default                         => 'rake',
   }
 
   $package_rails = $::operatingsystem ? {
