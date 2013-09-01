@@ -18,7 +18,7 @@
 # [*noops*]
 #   Set noop metaparameter to true for all the resources managed by the module.
 #   Basically you can run a dryrun for this specific module if you set
-#   this to true. Default: false
+#   this to true. Default: undef
 #
 # [*package*]
 #   The name of ruby package
@@ -26,12 +26,11 @@
 class ruby::rails (
   $version             = 'present',
   $absent              = false,
-  $noops               = false,
+  $noops               = undef,
   $package             = $ruby::package_rails
   ) inherits ruby {
 
   $bool_absent=any2bool($absent)
-  $bool_noops=any2bool($noops)
 
   ### Definition of some variables used in the module
   $manage_package = $bool_absent ? {
@@ -43,7 +42,7 @@ class ruby::rails (
   if ! defined(Package[$ruby::package_rails]) {
     package { $ruby::package_rails:
       ensure   => $manage_package,
-      noop     => $bool_noops,
+      noop     => $noops,
     }
   }
 }

@@ -28,7 +28,7 @@
 # [*noops*]
 #   Set noop metaparameter to true for all the resources managed by the module.
 #   Basically you can run a dryrun for this specific module if you set
-#   this to true. Default: false
+#   this to true. Default: undef
 #
 # Default class params - As defined in ruby::params.
 # Note that these variables are mostly defined and used in the module itself,
@@ -69,7 +69,6 @@ class ruby (
   $bool_install_rails=any2bool($install_rails)
   $bool_compile_from_source=any2bool($compile_from_source)
   $bool_absent=any2bool($absent)
-  $bool_noops=any2bool($noops)
 
   ### Definition of some variables used in the module
   $manage_package = $ruby::bool_absent ? {
@@ -82,7 +81,7 @@ class ruby (
     package { $ruby::package:
       ensure   => $ruby::manage_package,
       provider => $ruby::provider,
-      noop     => $ruby::bool_noops,
+      noop     => $ruby::noops,
     }
   }
 
