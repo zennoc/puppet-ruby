@@ -28,7 +28,7 @@ This module requires the presence of Example42 Puppi module in your modulepath.
           version => '1.0.1',
         }
 
-* Install ruby compiling from uptream source. You have to provide a correct version (as available on ftp://ftp.ruby-lang.org/pub/ruby/ ). Note that this will install various prerequite packages and will take some time
+* Install ruby compiling from uptream source. You have to provide a correct version (as available on ftp://ftp.ruby-lang.org/pub/ruby/ ). Note that this will install various prerequite packages and will take some time. Installs ruby to /usr/local/bin
 
         class { 'ruby':
           version             => '1.9.3-p392',
