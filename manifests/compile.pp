@@ -11,6 +11,7 @@ class ruby::compile {
 
   puppi::install_packages { 'ruby_compile_prerequisites':
     packages => $packages_list ,
+    timeout  => 3600,
   }
 
   $short_versions=split($ruby::version, '[.]')
